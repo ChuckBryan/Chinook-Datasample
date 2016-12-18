@@ -6,11 +6,25 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Chinook3.Controllers
 {
+    using Data;
+    using Microsoft.EntityFrameworkCore;
+
     public class HomeController : Controller
     {
+        private readonly ChinookContext _chinookContext;
+
+        public HomeController(ChinookContext chinookContext)
+        {
+            _chinookContext = chinookContext;
+        }
+
         public IActionResult Index()
         {
-            return View();
+
+
+            var albums = _chinookContext.Albums.ToList();
+
+            return View(albums);
         }
 
         public IActionResult About()

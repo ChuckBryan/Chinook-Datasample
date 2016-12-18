@@ -10,6 +10,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Chinook3
 {
+    using Data;
+    using Microsoft.EntityFrameworkCore;
+
     public class Startup
     {
         public Startup(IHostingEnvironment env)
@@ -29,6 +32,7 @@ namespace Chinook3
         {
             // Add framework services.
             services.AddMvc();
+           services.AddDbContext<ChinookContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ChinookDatabase")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
