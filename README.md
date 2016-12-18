@@ -1,10 +1,70 @@
-# Chinook-Datasample
-I am using this project to document my understanding of the changes that I have found in ASP.NET Core v1.1. Prior to starting this project, 
-I did add the ASP.NET Core Framework installation. In earlier attempts to get a project off the ground, I noticed that I was getting an error
-when upgrading NuGet packages. The specific reference was to the Schema for the Package *Secrets Manager* was not valid with the current
-version of my NuGet manager and it suggested that I update it. Once I did, I had not future problems with NuGet restorations.
+# About This Project #
+If you stumbled across this project, it is basically an application that I am using to build up my understanding of **ASP.NET Core.**
+For the backend, I am using the **Chinook** data model as an example.
 
-#Getting Started#
+This is project is using ASP.NET Core 1.1 and E.F. Core 1.1. I've used MVC since it first came out, but, I purposefully didn't follow
+the Core upgrades until it moved past 1.0 (so, 1.1 it is!!).
+
+# Failure to Launch #
+Initially, I had several failures trying to get this project template working. I *still* think that I am doing something wrong. Here
+is what I *thought* that I needed to do.
+
+1. Make sure that the ASP.NET Core Framework was installed (check)
+2. Create an ASP.NET Core Web Application (check)
+3. The result should be targeting 1.1 (no)
+
+With a little google foo, I found that I needed to make the following changes to the project.json:
+```javascript
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": [
+        "dotnet5.6",
+        "portable-net45+win8"
+      ]
+    }
+  }
+```
+needed to modified to
+```javascript
+  "frameworks": {
+    "netcoreapp1.1": {
+      "imports": [
+        "dotnet5.6",
+        "portable-net45+win8"
+      ]
+    }
+  }
+```
+and 
+```javascript
+  "dependencies": {
+    "Microsoft.NETCore.App": {
+      "version": "1.0.1",
+      "type": "platform"
+    },
+```
+needed to modified to
+```javascript
+  "dependencies": {
+    "Microsoft.NETCore.App": {
+      "version": "1.1.0",
+      "type": "platform"
+    },
+```
+
+At some point, I noticed that I was getting an error that was stating that the Secrets Manager Schema was not compatible
+with the version of NuGet that I had installed. VS2015 wasn't indicating that I needed to update. However, I did
+go to NuGet and installed the latest version.
+
+Finally, I updated the remainder of the NuGet Packages that were targeting 1.0.0 to 1.1.0. I thought I was good to
+go, However, Power Tools started to put "Squiggles" in my solution explorer. Something else was wrong. Looking at the 
+errors, it was obvious that during the package updates, MVC had gotten lost. I used `Ctrl-.` to fix the missing reference
+and VS2015 added the package back into my dependencies.
+
+I was finally able to run my Web Application.
+
+# Getting Started #
+
 Getting started with ASP.NET Core 1.1
 ASP.NET Core Templates = Web Application “No Authentication”
 What does this give us?
